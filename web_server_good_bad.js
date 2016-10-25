@@ -10,6 +10,8 @@
 
 var http = require('http');
 
+var insultgenerator = require('insultgenerator');
+
 //Lets define a port we want to listen to
 var PORTgood = 7000;
 
@@ -22,6 +24,11 @@ function handleRequestGood(request, response){
 
 function handleRequestBad(request, response){
 	response.end('Bad stuff about you hit');
+
+	insultgenerator(function(insult)
+	{
+        console.log(insult);
+	})
 }
 
 //Create a server
@@ -30,12 +37,17 @@ var serverGood = http.createServer(handleRequestGood);
 var serverBad = http.createServer(handleRequestBad);
 
 //Lets start our server
-server.listen(PORTgood, function(){
+serverGood.listen(PORTgood, function(){
     //Callback triggered when server is successfully listening. Hurray!
     console.log('something good about youself from', PORTgood);
 });
 
-server.listen(PORTbad, function(){
+serverBad.listen(PORTbad, function(){
 	console.log('something bad about yourself from', PORTbad);
-})
+
+	insultgenerator(function(insult)
+	{
+        console.log(insult);
+	})
+});
 
